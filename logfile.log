@@ -1,50 +1,43 @@
-2023-04-04 00:20:02,958 ERROR [Log] Class Utils | Method getRowCount | Exception desc : null 
-2023-04-04 00:20:02,958 INFO  [Log] Total testcase = 0 
-2023-04-04 00:21:01,787 ERROR [Log] Class Utils | Method getRowCount | Exception desc : null 
-2023-04-04 00:21:01,788 INFO  [Log] Total testcase = 0 
-2023-04-04 00:22:02,969 INFO  [Log] Total testcase = 3 
-2023-04-04 00:22:02,969 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:22:02,969 INFO  [Log] Total testcase =  
-2023-04-04 00:22:02,973 INFO  [Log] Run mode = TS_ID 
-2023-04-04 00:22:02,973 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:22:02,973 INFO  [Log] Total testcase =  
-2023-04-04 00:22:02,973 INFO  [Log] Run mode = TS_001 
-2023-04-04 00:26:01,189 INFO  [Log] Total testcase = 5 
-2023-04-04 00:26:01,190 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:26:01,190 INFO  [Log] Total testcase =  
-2023-04-04 00:26:01,192 INFO  [Log] Run mode = TS_ID 
-2023-04-04 00:26:01,192 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:26:01,192 INFO  [Log] Total testcase =  
-2023-04-04 00:26:01,192 INFO  [Log] Run mode = TS_001 
-2023-04-04 00:26:01,192 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:26:01,192 INFO  [Log] Total testcase =  
-2023-04-04 00:26:01,192 INFO  [Log] Run mode = TS_002 
-2023-04-04 00:26:01,192 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:26:01,192 INFO  [Log] Total testcase =  
-2023-04-04 00:26:01,192 INFO  [Log] Run mode = TS_003 
-2023-04-04 00:30:02,946 INFO  [Log] Total testcase = 5 
-2023-04-04 00:30:02,947 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:30:02,947 INFO  [Log] Total testcase =  
-2023-04-04 00:30:02,949 INFO  [Log] Run mode = TS_ID 
-2023-04-04 00:30:02,949 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:30:02,949 INFO  [Log] Total testcase =  
-2023-04-04 00:30:02,949 INFO  [Log] Run mode = TS_001 
-2023-04-04 00:30:02,949 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:30:02,949 INFO  [Log] Total testcase =  
-2023-04-04 00:30:02,949 INFO  [Log] Run mode = TS_002 
-2023-04-04 00:30:02,949 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:30:02,949 INFO  [Log] Total testcase =  
-2023-04-04 00:30:02,949 INFO  [Log] Run mode = TS_003 
-2023-04-04 00:31:30,465 INFO  [Log] Total testcase = 5 
-2023-04-04 00:31:30,465 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:31:30,465 INFO  [Log] Total testcase =  
-2023-04-04 00:31:30,467 INFO  [Log] Run mode = TS_ID 
-2023-04-04 00:31:30,467 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:31:30,467 INFO  [Log] Total testcase =  
-2023-04-04 00:31:30,467 INFO  [Log] Run mode = TS_001 
-2023-04-04 00:31:30,467 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:31:30,467 INFO  [Log] Total testcase =  
-2023-04-04 00:31:30,467 INFO  [Log] Run mode = TS_002 
-2023-04-04 00:31:30,467 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
-2023-04-04 00:31:30,467 INFO  [Log] Total testcase =  
-2023-04-04 00:31:30,467 INFO  [Log] Run mode = TS_003 
+2023-04-04 09:57:13,673 ERROR [Log] Class Utils | Method getRowCount | Exception desc : null 
+2023-04-04 09:57:13,675 INFO  [Log] Total testcase = 0 
+2023-04-04 10:00:48,909 INFO  [Log] Total testcase = 5 
+2023-04-04 10:00:48,910 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:00:48,910 INFO  [Log] Total testcase =  
+2023-04-04 10:00:48,916 INFO  [Log] Run mode = TS_ID 
+2023-04-04 10:00:48,916 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:00:48,916 INFO  [Log] Total testcase =  
+2023-04-04 10:00:48,916 INFO  [Log] Run mode = TS_001 
+2023-04-04 10:00:48,916 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:00:48,916 INFO  [Log] Total testcase =  
+2023-04-04 10:00:48,917 INFO  [Log] Run mode = TS_002 
+2023-04-04 10:00:48,917 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:00:48,917 INFO  [Log] Total testcase =  
+2023-04-04 10:00:48,917 INFO  [Log] Run mode = TS_003 
+2023-04-04 10:19:43,794 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:19:43,798 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:19:43,799 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:19:43,799 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:19:43,799 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 10:19:43,800 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,293 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,297 INFO  [Log] Total testcase = 5 
+2023-04-04 11:10:46,298 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,298 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,298 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 11:10:46,298 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,651 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,654 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 INFO  [Log] Total testcase = 5 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 
+2023-04-04 14:27:15,655 ERROR [Log] Class Utils | Method getCellData | Exception desc : null 

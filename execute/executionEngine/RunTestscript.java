@@ -10,119 +10,139 @@ import utilities.ExcelUtils;
 import utilities.Log;
 
 public class RunTestscript {
+    public static actionKeywords ActionKeywords;
+    public static String sActionKeyword;
+    public static String sPageObject;
+    public static Method[] method;
+
+    public static int iTestStep;
+    public static int iTestLastStep;
+    public static String sTestCaseID;
+    public static String sRunMode;
+    public static String sData;
+    public static String sKeyword;
+    public static String sObject;
+    public static String sTestStepID;
+    public static boolean bResult;
 
     public RunTestscript() throws NoSuchMethodException, SecurityException {
-        actionKeywords = new actionKeywords();
-        method = actionKeywords.getClass().getMethods();
+        ActionKeywords = new actionKeywords();
+        method = ActionKeywords.getClass().getMethods();
     }
 
     public static void main(String[] args) throws Exception {
         ExcelUtils.setExcelFile(Constants.PATH_TEST_DATA);
         DOMConfigurator.configure("log4j.xml");
 
+        // Initialize action keywords object
+        ActionKeywords = new actionKeywords();
+        // Open the Excel file
+        ExcelUtils.setExcelFile(Constants.PATH_TEST_DATA);
+
+        // Loop through the Test Steps sheet
+        for (iTestStep = 1; iTestStep <= ExcelUtils.getRowCount(Constants.SHEET_TESTSTEPS); iTestStep++) {
+            // Get the current test case ID and test step ID
+            sTestCaseID = ExcelUtils.getCellData(iTestStep, Constants.TC_ID, Constants.SHEET_TESTSTEPS);
+            ExcelUtils.getCellData(iTestStep, Constants.TS_ID, Constants.SHEET_TESTSTEPS);
+
+            // If the test case ID is blank, skip the test step
+            if (sTestCaseID.equals("")) {
+                continue;
+            }
+
+            // Get the Action, UI, and Data associated with the test step
+            sActionKeyword = ExcelUtils.getCellData(iTestStep, Constants.ACTION, Constants.SHEET_TESTSTEPS);
+            sPageObject = ExcelUtils.getCellData(iTestStep, Constants.ELEMENT, Constants.SHEET_TESTSTEPS);
+            sData = ExcelUtils.getCellData(iTestStep, Constants.DATA, Constants.SHEET_TESTSTEPS);
+
+            // Merge the page object from the Test Steps sheet with the corresponding element from the PageUIs sheet
+            if (!sPageObject.equals("")) {
+                String sElement = ExcelUtils.getCellData(iTestStep, Constants.ELEMENT, Constants.SHEET_PAGEUI);
+                sPageObject = sElement + "." + sPageObject;
+            }
+
+            // Invoke the method corresponding to the Action keyword
+            Method method = ActionKeywords.getClass().getMethod(sActionKeyword, String.class, String.class);
+            method.invoke(ActionKeywords, sPageObject, sData);
+
+            // If the method returns false, set the result to false
+            if (bResult == false) {
+                ExcelUtils.setCellData(Constants.KEYWORD_FAIL, iTestStep, Constants.TS_RESULT, Constants.SHEET_TESTSTEPS);
+            }
+        }
+
+        // Call execute_TestCase method outside the loop
         RunTestscript startEngine = new RunTestscript();
         startEngine.execute_TestCase();
     }
-
+    
     private void execute_TestCase() throws Exception {
         // Count all rows in sheet Testcase
         int iTotalTestCases = ExcelUtils.getRowCount(Constants.SHEET_TESTCASES);
         Log.info("Total testcase = " + iTotalTestCases);
         // Loop for every row
-        for (int iTestcase = 1; iTestcase < iTotalTestCases; iTestcase++) {
-            // Set result = true
-            bResult = true;
-            // Get Testcase ID
+        for (int iTestcase = 1; iTestcase <= iTotalTestCases; iTestcase++) {
+            // Get the test case ID and run mode
             sTestCaseID = ExcelUtils.getCellData(iTestcase, Constants.TC_ID, Constants.SHEET_TESTCASES);
-            Log.info("Total testcase = " + sTestCaseID);
-            // Get Run Mode (If RunMode = Yes then Run Test)
             sRunMode = ExcelUtils.getCellData(iTestcase, Constants.RUN_MODE, Constants.SHEET_TESTCASES);
-            Log.info("Run mode = " + sRunMode);
-            if (sRunMode.equals("Yes")) {
-                // Start testcase
-                Log.startTestCase(sTestCaseID);
-                // Map Teststep ID from TestcaseID
-                iTestStep = ExcelUtils.getRowContains(sTestCaseID, Constants.TC_ID, Constants.SHEET_TESTSTEPS);
-                Log.info("Teststep = " + iTestStep);
-                iTestLastStep = ExcelUtils.getTestStepsCount(Constants.SHEET_TESTSTEPS, sTestCaseID, iTestStep);
-                Log.info("Last step = " + iTestLastStep);
-                bResult = true;
-                for (; iTestStep < iTestLastStep; iTestStep++) {
-                    // Get data of action keyword/ page object/ data set
-                    sActionKeyword = ExcelUtils.getCellData(iTestStep, Constants.ACTION, Constants.SHEET_TESTSTEPS);
-                    Log.info("Action keyword = " + sActionKeyword);
-                    sPageObject = ExcelUtils.getCellData(iTestStep, Constants.ELEMENT, Constants.SHEET_TESTSTEPS);
-                    Log.info("Page Object = " + sPageObject);
-                    sData = ExcelUtils.getCellData(iTestStep, Constants.DATA, Constants.SHEET_TESTSTEPS);
-                    Log.info("Data set = " + sData);
-                    // Run test
-                    execute_Actions();
-                    if (bResult == false) {
-                        ExcelUtils.setCellData(Constants.KEYWORD_FAIL, iTestcase, Constants.TS_RESULT, Constants.SHEET_TESTCASES);
-                        Log.endTestCase(sTestCaseID);
-                        break;
-                    }
+
+            // If the run mode is "No", skip the test case
+            if (sRunMode.equals("No")) {
+                // Set result to "Skipped" for all test steps associated with this test case
+                int iLastStep = ExcelUtils.getTestStepsCount(sTestCaseID, iTestcase);
+                ExcelUtils.setTestStepsResult(sTestCaseID, iTestcase, 1, iLastStep, Constants.KEYWORD_SKIP);
+                // Log the skipped test case
+                Log.info("Test case " + sTestCaseID + " skipped");
+                continue;
+            }
+
+            // Log the start of the test case
+            Log.startTestCase(sTestCaseID);
+
+            // Loop through the Test Steps sheet to execute the test steps
+            iTestStep = ExcelUtils.getFirstTestStepRow(sTestCaseID, iTestcase);
+            iTestLastStep = ExcelUtils.getTestStepsCount(sTestCaseID, iTestcase);
+            bResult = true;
+            while (iTestStep <= iTestLastStep) {
+                sActionKeyword = ExcelUtils.getCellData(iTestStep, Constants.ACTION, Constants.SHEET_TESTSTEPS);
+                sPageObject = ExcelUtils.getCellData(iTestStep, Constants.ELEMENT, Constants.SHEET_TESTSTEPS);
+                sData = ExcelUtils.getCellData(iTestStep, Constants.DATA, Constants.SHEET_TESTSTEPS);
+
+                // Merge the page object from the Test Steps sheet with the corresponding element from the PageUIs sheet
+                if (!sPageObject.equals("")) {
+                    String sElement = ExcelUtils.getCellData(iTestStep, Constants.ELEMENT, Constants.SHEET_PAGEUI);
+                    sPageObject = sElement + "." + sPageObject;
                 }
+
+                // Invoke the method corresponding to the Action keyword
+                Method method = ActionKeywords.getClass().getMethod(sActionKeyword, String.class, String.class);
+                bResult = (Boolean) method.invoke(ActionKeywords, sPageObject, sData);
+
+                // Set the test step result based on the result of the action keyword
                 if (bResult == true) {
-                    ExcelUtils.setCellData(Constants.KEYWORD_PASS, iTestcase, Constants.TS_RESULT, Constants.SHEET_TESTCASES);
-                    Log.endTestCase(sTestCaseID);
+                    ExcelUtils.setCellData(Constants.KEYWORD_PASS, iTestStep, Constants.TS_RESULT, Constants.SHEET_TESTSTEPS);
+                } else {
+                    ExcelUtils.setCellData(Constants.KEYWORD_FAIL, iTestStep, Constants.TS_RESULT, Constants.SHEET_TESTSTEPS);
+                // Set the test step result based on the result of the action keyword
+                if (bResult == true) {
+                    // If the keyword passes, set the test step result as Pass
+                    ExcelUtils.setCellData(Constants.KEYWORD_PASS, iTestStep, Constants.TS_RESULT, Constants.SHEET_TESTSTEPS);
+                    Log.info(sTestCaseID + " - " + sTestStepID + " - " + sActionKeyword + " - Passed");
+                } else {
+                    // If the keyword fails, set the test step result as Fail
+                    ExcelUtils.setCellData(Constants.KEYWORD_FAIL, iTestStep, Constants.TS_RESULT, Constants.SHEET_TESTSTEPS);
+                    Log.info(sTestCaseID + " - " + sTestStepID + " - " + sActionKeyword + " - Failed");
+                    // If a test step fails, set the overall test case result as Fail
+                    ExcelUtils.setCellData(Constants.KEYWORD_FAIL, iTestcase, Constants.TC_RESULT, Constants.SHEET_TESTCASES);
+                    break;
+                    }        
+                // If the test case has reached its last test step, set the overall test case result as Pass
+                if (iTestStep == iTestLastStep) {
+                    ExcelUtils.setCellData(Constants.KEYWORD_PASS, iTestcase, Constants.TC_RESULT, Constants.SHEET_TESTCASES);
+                    Log.info(sTestCaseID + " - Passed");
                 }
             }
         }
-    }
-    
-    private static void execute_Actions() throws Exception {
-        String[] sheets = {Constants.SHEET_TESTCASES, Constants.SHEET_TESTSTEPS, Constants.SHEET_PAGEUI};
-        for (String sheet : sheets) {
-            int totalKeywords = ExcelUtils.getRowCount(sheet);
-            for (int i = 1; i < totalKeywords; i++) {
-                String tcId = ExcelUtils.getCellData(i, Constants.TC_ID, sheet);
-                String tsId = ExcelUtils.getCellData(i, Constants.TS_ID, sheet);
-                String ui = ExcelUtils.getCellData(i, Constants.UI, sheet);
-                String action = ExcelUtils.getCellData(i, Constants.ACTION, sheet);
-                String data = ExcelUtils.getCellData(i, Constants.DATA, sheet);
-                
-                // check if the current row is marked as runnable
-                String runMode = ExcelUtils.getCellData(i, Constants.RUN_MODE, Constants.SHEET_TESTCASES);
-                if (runMode.equalsIgnoreCase("yes")) {
-                    // Invoke the method corresponding to the Action keyword
-                    Method method = actionKeywords.class.getMethod(action, String.class, String.class);
-                    method.invoke(actionKeywords.class.newInstance(), ui, data);
-                    
-                    // Check the result of the action
-                    boolean tsResult = bResult;
-                    String tcResult;
-                    if (!tsResult) {
-                        tcResult = Constants.KEYWORD_FAIL;
-                        ExcelUtils.setCellData(tcResult, i, Constants.TS_RESULT, sheet);
-                        ExcelUtils.setCellData(tcResult, i, Constants.TC_RESULT, Constants.SHEET_TESTCASES);
-                        break;
-                    } else {
-                        tcResult = Constants.KEYWORD_PASS;
-                        ExcelUtils.setCellData(tcResult, i, Constants.TS_RESULT, sheet);
-                    }
-                    
-                    // If this is the last test step for the current test case, mark the test case as completed
-                    int nextTsId = i + 1;
-                    if (nextTsId >= totalKeywords || !ExcelUtils.getCellData(nextTsId, Constants.TC_ID, sheet).equals(tcId)) {
-                        ExcelUtils.setCellData(tcResult, i, Constants.TC_RESULT, Constants.SHEET_TESTCASES);
-                    }
-                }
-            }
         }
-    }
-	public static actionKeywords actionKeywords;
-	public static String sActionKeyword;
-	public static String sPageObject;
-	public static Method method[];
-	
-	public static int iTestStep;
-	public static int iTestLastStep;
-	public static String sTestCaseID;
-	public static String sRunMode;
-	public static String sData;
-	public static String sKeyword;
-	public static String sObject;
-	public static boolean bResult;
-    }
-           
+        }
+}

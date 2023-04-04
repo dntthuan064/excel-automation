@@ -109,4 +109,16 @@ public class ExcelUtils {
 		}
 	}
 
+	public static int getFirstTestStepRow(String sTestCaseID, int iTestcase) {
+		return 0;
+	}
+
+	public static int getTestStepsCount(String sTestCaseID, int iTestcase) {
+		return 0;
+	}
+
+	public static void setTestStepsResult(String sTestCaseID, int iTestcase, int i, int iLastStep, String keywordSkip) {
+		
+	}
+
 }
